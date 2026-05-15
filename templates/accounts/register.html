@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Register · PaperAtlas{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Create your account</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+</section>
+{% endblock %}

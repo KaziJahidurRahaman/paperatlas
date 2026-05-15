@@ -1,0 +1,129 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0b1220;
+  --surface: #111b2e;
+  --surface-muted: #1a2740;
+  --text: #e8edf6;
+  --text-muted: #a8b5cc;
+  --accent: #70a5ff;
+  --accent-2: #dce8ff;
+  --border: #2b3c5b;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  margin-bottom: 2rem;
+}
+
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 1rem;
+}
+
+nav a, .brand {
+  color: var(--text);
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.narrow {
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.filters, .grid-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.filters {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.grid-form {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+input, select, textarea, button, .button {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text);
+  padding: 0.75rem 0.9rem;
+}
+
+button, .button {
+  background: var(--accent);
+  color: #05132e;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--accent-2);
+}
+
+.paper-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.paper-meta, .actions, .section-header {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+.message {
+  list-style: none;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: #16305f;
+  margin-bottom: 1rem;
+}
+
+code {
+  background: #0d1730;
+  padding: 0.15rem 0.35rem;
+  border-radius: 6px;
+}

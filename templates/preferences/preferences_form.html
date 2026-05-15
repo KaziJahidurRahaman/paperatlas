@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Preferences · PaperAtlas{% endblock %}
+{% block content %}
+<section class="card">
+  <div class="section-header">
+    <div>
+      <h1>Research interests and search preferences</h1>
+      <p>Enter one topic, keyword, journal, category, or query per line. Use <code>label|query</code> for named extra/arXiv queries.</p>
+    </div>
+    <a class="button secondary" href="{% url 'preferences:refresh' %}">Refresh my feed</a>
+  </div>
+  <form method="post" class="grid-form">
+    {% csrf_token %}
+    <div>
+      <h2>Research interests</h2>
+      {{ interest_form.as_p }}
+    </div>
+    <div>
+      <h2>Search preferences</h2>
+      {{ preference_form.as_p }}
+    </div>
+    <div class="full-width">
+      <button type="submit">Save preferences</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

@@ -1,5 +1,26 @@
 # Research Feed — Krishnagopal Halder
 
+This repository now contains two related implementations:
+
+1. the original static research feed (`index.html`, `app.js`, `style.css`, `scripts/fetch_publications.py`);
+2. a Django application that turns the feed into a per-user product with accounts, profiles, saved interests, dashboard results, and optional saved papers.
+
+## Django quickstart
+
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py import_publications
+python manage.py runserver
+```
+
+Useful commands:
+
+- `python manage.py bootstrap_user_defaults <username>` — seed one user's interests from `query_config.yml`
+- `python manage.py refresh_feeds --username <username>` — refresh one user's personalized feed
+- `celery -A config worker -B --loglevel=info` — run background feed refresh workers locally
+
 A self-updating **research-interest feed**. Pulls the latest publications from
 the **Web of Science API** and the **arXiv API** every Monday via **GitHub
 Actions** and serves them as a static site through **GitHub Pages**.

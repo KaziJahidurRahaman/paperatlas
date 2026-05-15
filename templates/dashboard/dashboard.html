@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard · PaperAtlas{% endblock %}
+{% block content %}
+<section class="card">
+  <div class="section-header">
+    <div>
+      <h1>Your dashboard</h1>
+      <p>Personalized papers based on your saved interests.</p>
+    </div>
+    <a class="button secondary" href="{% url 'preferences:refresh' %}">Refresh my feed</a>
+  </div>
+  <form method="get" class="filters">
+    <input type="search" name="q" value="{{ filters.q }}" placeholder="Search title, journal, DOI" />
+    <select name="journal">
+      <option value="">All journals</option>
+      {% for item in journals %}
+        <option value="{{ item }}" {% if filters.journal == item %}selected{% endif %}>{{ item }}</option>
+      {% endfor %}
+    </select>
+    <select name="publisher">
+      <option value="">All publishers</option>
+      {% for item in publishers %}
+        <option value="{{ item }}" {% if filters.publisher == item %}selected{% endif %}>{{ item }}</option>
+      {% endfor %}
+    </select>
+    <select name="year">
+      <option value="">All years</option>
+      {% for item in years %}
+        <option value="{{ item }}" {% if filters.year == item %}selected{% endif %}>{{ item }}</option>
+      {% endfor %}
+    </select>
+    <select name="sort">
+      <option value="year" {% if filters.sort == 'year' %}selected{% endif %}>Newest first</option>
+      <option value="cited" {% if filters.sort == 'cited' %}selected{% endif %}>Most cited</option>
+      <option value="alpha" {% if filters.sort == 'alpha' %}selected{% endif %}>A → Z</option>
+    </select>
+    <button type="submit">Apply</button>
+  </form>
+</section>
+
+{% if matches %}
+  <div class="paper-grid">
+    {% for match in matches %}
+      <article class="card paper-card">
+        <div class="paper-meta">
+          <span>{{ match.paper.year|default:'n.d.' }}</span>
+          <span>{{ match.paper.publisher|default:'Other' }}</span>
+          <span>{{ match.paper.citations }} cites</span>
+        </div>
+        <h2>{{ match.paper.title }}</h2>
+        <p>{{ match.paper.authors|join:', ' }}</p>
+        <p><strong>{{ match.paper.journal }}</strong></p>
+        <p>Matched via: {{ match.matched_queries|join:', ' }}</p>
+        {% if match.paper.keywords %}
+          <p>Keywords: {{ match.paper.keywords|join:', ' }}</p>
+        {% endif %}
+        <div class="actions">
+          {% if match.paper.doi %}<a class="button" href="https://doi.org/{{ match.paper.doi|urlencode }}" target="_blank" rel="noopener">Open DOI</a>{% endif %}
+          <a class="button secondary" href="{% url 'dashboard:toggle_favorite' match.paper.id %}">{% if match.paper.is_favorite %}Unsave{% else %}Save{% endif %}</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <section class="card">
+    <p>No papers match your current filters yet.</p>
+  </section>
+{% endif %}
+{% endblock %}

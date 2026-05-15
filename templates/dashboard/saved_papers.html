@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Saved papers · PaperAtlas{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Saved papers</h1>
+</section>
+{% if favorites %}
+  <div class="paper-grid">
+    {% for favorite in favorites %}
+      <article class="card paper-card">
+        <div class="paper-meta">
+          <span>{{ favorite.paper.year|default:'n.d.' }}</span>
+          <span>{{ favorite.paper.publisher|default:'Other' }}</span>
+        </div>
+        <h2>{{ favorite.paper.title }}</h2>
+        <p>{{ favorite.paper.authors|join:', ' }}</p>
+        <p><strong>{{ favorite.paper.journal }}</strong></p>
+        <div class="actions">
+          {% if favorite.paper.doi %}<a class="button" href="https://doi.org/{{ favorite.paper.doi|urlencode }}" target="_blank" rel="noopener">Open DOI</a>{% endif %}
+          <a class="button secondary" href="{% url 'dashboard:toggle_favorite' favorite.paper.id %}">Remove</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <section class="card">
+    <p>You have not saved any papers yet.</p>
+  </section>
+{% endif %}
+{% endblock %}
